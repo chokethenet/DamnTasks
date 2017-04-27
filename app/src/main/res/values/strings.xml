@@ -1,3 +1,15 @@
 <resources>
+    <!-- MAIN -->
     <string name="app_name">DamnTasks</string>
+
+    <!-- ABOUT -->
+    <string name="about_title">About</string>
+    <string name="about_contact_title">Contact</string>
+    <string name="about_mail_to" translatable="false">choke84@gmail.com</string>
+    <string name="about_mail_subject">Contact from DamnTasks</string>
+    <string name="about_collaborate_title">Collaborate</string>
+    <string name="about_github_uri" translatable="false">https://github.com/chokethenet/DamnTasks</string>
+    <string name="about_logo_desc">App logo</string>
+    <string name="about_mail_desc">e-mail logo</string>
+    <string name="about_github_desc">GitHub logo</string>
 </resources>
