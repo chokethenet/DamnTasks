@@ -2,6 +2,7 @@ package net.chokethe.damntasks;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         holder.itemView.setTag(position);
         holder.id = id;
 //        Resources res = mContext.getResources();
+        // FIXME: mock views
         holder.mTest.setText(task.toString());
+        holder.mTest.setBackgroundColor(task.getColor());
+        holder.mTest.setAlpha(0.3f);
     }
 
     @Override

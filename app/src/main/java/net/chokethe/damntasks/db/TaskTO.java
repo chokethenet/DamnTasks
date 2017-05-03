@@ -2,7 +2,9 @@ package net.chokethe.damntasks.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.graphics.Color;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class TaskTO {
@@ -36,9 +38,6 @@ public class TaskTO {
     private long nextDate;
     private String period;
 
-    private TaskTO() {
-    }
-
     public TaskTO(TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
         this.type = type;
         this.title = title;
@@ -63,6 +62,7 @@ public class TaskTO {
                 cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_PERIOD)));
     }
 
+    // FIXME: just for test
     @Override
     public String toString() {
         StringBuilder sb =
@@ -114,5 +114,25 @@ public class TaskTO {
 
     public String getPeriod() {
         return period;
+    }
+
+    // TODO: improve calculation to be a percentage of the period so its better
+    // if no period, then calculate by the accuracy of the nextDate, if is up to seconds or just to days
+    // then set "hours" before if the time is specified or set "days" before if no time
+    public int getColor() {
+        Calendar today = Calendar.getInstance();
+
+        Calendar next = Calendar.getInstance();
+        next.setTimeInMillis(getNextDate());
+
+        if (next.before(today)) {
+            return Color.RED;
+        }
+        next.add(Calendar.DATE, -7);
+        if (next.before(today)) {
+            return Color.YELLOW;
+        } else {
+            return Color.GREEN;
+        }
     }
 }

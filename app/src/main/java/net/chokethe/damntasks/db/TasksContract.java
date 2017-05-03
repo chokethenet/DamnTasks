@@ -37,23 +37,24 @@ public class TasksContract {
         db.execSQL(TasksContract.SQL_CREATE_TASKS_TABLE);
     }
 
+    // FIXME: set initial example tasks by language
     static void populateDefaults(SQLiteDatabase db) {
         List<TaskTO> tasks = new ArrayList();
         tasks.add(new TaskTO(TaskTO.TaskType.SHOP, "Comprar pata fregadero",
                 "Comprar un hierro para hacer una pata para el fregadero",
-                false, new Date(117, 6, 30).getTime(), null));
+                false, new Date(117, 5, 30).getTime(), null));
         tasks.add(new TaskTO(TaskTO.TaskType.WORK, "Arreglar enchufe",
                 "Arreglar el enchufe del comedor debajo de la mesa",
-                false, new Date(117, 12, 31).getTime(), null));
+                false, new Date(117, 11, 31).getTime(), null));
         tasks.add(new TaskTO(TaskTO.TaskType.CLEAN, "Limpiar ventanas",
                 "Limpiar todas las ventanas de casa",
-                true, new Date(117, 6, 20).getTime(), "2m"));
+                true, new Date(117, 5, 20).getTime(), "2m"));
         tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Regar plantas", null,
-                true, new Date(117, 5, 4).getTime(), "3d"));
+                true, new Date(117, 4, 4).getTime(), "3d"));
         tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Vacunar perro", null,
-                true, new Date(117, 5, 15).getTime(), "1y"));
+                true, new Date(117, 4, 10).getTime(), "1y"));
         tasks.add(new TaskTO(TaskTO.TaskType.OTHER, "Cortarme el pelo", null,
-                true, new Date(117, 5, 5).getTime(), "3m"));
+                true, new Date(117, 3, 5).getTime(), "3m"));
 
         for (TaskTO task : tasks) {
             db.insert(TasksEntry.TABLE_NAME, null, task.toContentValues());
@@ -61,7 +62,7 @@ public class TasksContract {
     }
 
     static Cursor selectAll(SQLiteDatabase db) {
-        return db.query(TasksEntry.TABLE_NAME, null, null, null, null, null, TasksEntry.COL_NEXT_DATE + " DESC");
+        return db.query(TasksEntry.TABLE_NAME, null, null, null, null, null, TasksEntry.COL_NEXT_DATE + " ASC");
     }
 
     static void update(SQLiteDatabase db, ContentValues contentValues) {
