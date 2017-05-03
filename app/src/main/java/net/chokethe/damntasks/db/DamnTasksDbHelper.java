@@ -15,15 +15,13 @@ public class DamnTasksDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS tasks"); // FIXME: just for test
         TasksContract.createTable(db);
         TasksContract.populateDefaults(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // FIXME: just to test
-        db.execSQL("DROP TABLE tasks");
-        this.onCreate(db);
         // Nothing to do...
     }
 

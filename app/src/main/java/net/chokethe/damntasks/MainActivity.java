@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO 2: load data from ws to db
 
         mDamnTasksDbHelper = new DamnTasksDbHelper(this);
+        mDamnTasksDbHelper.onCreate(mDamnTasksDbHelper.getWritableDatabase()); // FIXME: just for test
         mAdapter = new TasksAdapter(this, mDamnTasksDbHelper);
         mRecyclerView = (RecyclerView) findViewById(R.id.main_rv_tasks);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -42,12 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                TasksAdapter.TaskViewHolder taskViewHolder = (TasksAdapter.TaskViewHolder) viewHolder;
-                mDamnTasksDbHelper.deleteTask(taskViewHolder.id);
+//                TasksAdapter.TaskViewHolder taskViewHolder = (TasksAdapter.TaskViewHolder) viewHolder;
+//                mDamnTasksDbHelper.deleteTask(taskViewHolder.id);
+                // TODO: instead of deleting the task, set the next task if its repeatable or move to archived for future
                 mAdapter.swapCursor();
                 CommonUtils.showToast(MainActivity.this, "test swipe");
             }
         }).attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdapter.close();
+        mDamnTasksDbHelper.close();
     }
 
     @Override

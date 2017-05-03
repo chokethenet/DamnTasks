@@ -1,10 +1,13 @@
 package net.chokethe.damntasks.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import java.util.Date;
 
 public class TaskTO {
 
-    private enum TaskType {
+    public enum TaskType {
         OTHER(0), SHOP(1), CLEAN(2), WORK(3), CARE(4);
 
         private int id;
@@ -31,12 +34,12 @@ public class TaskTO {
     private String desc;
     private boolean repeat;
     private long nextDate;
-    private long period;
+    private String period;
 
     private TaskTO() {
     }
 
-    public TaskTO(TaskType type, String title, String desc, boolean repeat, long nextDate, long period) {
+    public TaskTO(TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
         this.type = type;
         this.title = title;
         this.desc = desc;
@@ -45,20 +48,43 @@ public class TaskTO {
         this.period = period;
     }
 
-    public TaskTO(Long id, TaskType type, String title, String desc, boolean repeat, long nextDate, long period) {
+    public TaskTO(long id, TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
         this(type, title, desc, repeat, nextDate, period);
         this.id = id;
     }
 
+    public TaskTO(Cursor cursor) {
+        this(cursor.getLong(cursor.getColumnIndex(TasksContract.TasksEntry._ID)),
+                TaskType.getById(cursor.getInt(cursor.getColumnIndex(TasksContract.TasksEntry.COL_TYPE))),
+                cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_TITLE)),
+                cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_DESC)),
+                cursor.getShort(cursor.getColumnIndex(TasksContract.TasksEntry.COL_REPEAT)) != 0,
+                cursor.getLong(cursor.getColumnIndex(TasksContract.TasksEntry.COL_NEXT_DATE)),
+                cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_PERIOD)));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb =
+                new StringBuilder("TASK (").append(id).append(")\n\r")
+                        .append("type: ").append(type.toString()).append(" - ")
+                        .append(title).append("\n\r")
+                        .append(desc).append("\n\r")
+                        .append(repeat ? "repeat" : "").append("\n\r")
+                        .append("nextDate: ").append(new Date(nextDate).toString()).append("\n\r")
+                        .append("period: ").append(period);
+        return sb.toString();
+    }
+
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TasksContract.TasksEntry._ID, id);
+        if (id != null) contentValues.put(TasksContract.TasksEntry._ID, id);
         contentValues.put(TasksContract.TasksEntry.COL_TYPE, type.getId());
         contentValues.put(TasksContract.TasksEntry.COL_TITLE, title);
-        contentValues.put(TasksContract.TasksEntry.COL_DESC, desc);
+        if (desc != null) contentValues.put(TasksContract.TasksEntry.COL_DESC, desc);
         contentValues.put(TasksContract.TasksEntry.COL_REPEAT, repeat);
         contentValues.put(TasksContract.TasksEntry.COL_NEXT_DATE, nextDate);
-        contentValues.put(TasksContract.TasksEntry.COL_PERIOD, period);
+        if (period != null) contentValues.put(TasksContract.TasksEntry.COL_PERIOD, period);
         return contentValues;
     }
 
@@ -86,7 +112,7 @@ public class TaskTO {
         return nextDate;
     }
 
-    public long getPeriod() {
+    public String getPeriod() {
         return period;
     }
 }

@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class TasksContract {
     private TasksContract() {
     }
@@ -26,26 +30,34 @@ public class TasksContract {
             TasksEntry.COL_DESC + " TEXT, " +
             TasksEntry.COL_REPEAT + " INTEGER NOT NULL, " +
             TasksEntry.COL_NEXT_DATE + " INTEGER NOT NULL, " +
-            TasksEntry.COL_PERIOD + " INTEGER" +
+            TasksEntry.COL_PERIOD + " TEXT" +
             ") ";
 
     static void createTable(SQLiteDatabase db) {
         db.execSQL(TasksContract.SQL_CREATE_TASKS_TABLE);
     }
 
-//    private static final int[][] DEFAULT_BLINDS = {
-//            {5, 10, 30}, {10, 25, 30}, {25, 50, 20}, {50, 75, 20}, {75, 100, 20},
-//            {100, 150, 15}, {125, 200, 15}, {150, 250, 15}, {200, 350, 10}, {250, 500, 10}};
-
     static void populateDefaults(SQLiteDatabase db) {
-        // FIXME: insert mock data
-//        for (int[] DEFAULT_BLIND : DEFAULT_BLINDS) {
-//            ContentValues insertValues = new ContentValues();
-//            insertValues.put(TasksEntry.COLUMN_SMALL_BLIND, DEFAULT_BLIND[0]);
-//            insertValues.put(TasksEntry.COLUMN_BIG_BLIND, DEFAULT_BLIND[1]);
-//            insertValues.put(TasksEntry.COLUMN_RISE_TIME, DEFAULT_BLIND[2]);
-//            db.insert(TasksEntry.TABLE_NAME, null, insertValues);
-//        }
+        List<TaskTO> tasks = new ArrayList();
+        tasks.add(new TaskTO(TaskTO.TaskType.SHOP, "Comprar pata fregadero",
+                "Comprar un hierro para hacer una pata para el fregadero",
+                false, new Date(117, 6, 30).getTime(), null));
+        tasks.add(new TaskTO(TaskTO.TaskType.WORK, "Arreglar enchufe",
+                "Arreglar el enchufe del comedor debajo de la mesa",
+                false, new Date(117, 12, 31).getTime(), null));
+        tasks.add(new TaskTO(TaskTO.TaskType.CLEAN, "Limpiar ventanas",
+                "Limpiar todas las ventanas de casa",
+                true, new Date(117, 6, 20).getTime(), "2m"));
+        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Regar plantas", null,
+                true, new Date(117, 5, 4).getTime(), "3d"));
+        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Vacunar perro", null,
+                true, new Date(117, 5, 15).getTime(), "1y"));
+        tasks.add(new TaskTO(TaskTO.TaskType.OTHER, "Cortarme el pelo", null,
+                true, new Date(117, 5, 5).getTime(), "3m"));
+
+        for (TaskTO task : tasks) {
+            db.insert(TasksEntry.TABLE_NAME, null, task.toContentValues());
+        }
     }
 
     static Cursor selectAll(SQLiteDatabase db) {
