@@ -4,13 +4,15 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 
+import net.chokethe.damntasks.R;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public class TaskTO {
 
     public enum TaskType {
-        OTHER(0), SHOP(1), CLEAN(2), WORK(3), CARE(4);
+        OTHER(0), SHOP(1), CLEAN(2), WORK(3), CARE(4), PET(5);
 
         private int id;
 
@@ -27,6 +29,23 @@ public class TaskTO {
                 if (e.id == id) return e;
             }
             return null;
+        }
+
+        public int getTaskResource() {
+            switch (this) {
+                case SHOP:
+                    return R.drawable.ic_task_shop;
+                case CLEAN:
+                    return R.drawable.ic_task_clean;
+                case WORK:
+                    return R.drawable.ic_task_work;
+                case CARE:
+                    return R.drawable.ic_task_care;
+                case PET:
+                    return R.drawable.ic_task_pet;
+                default:
+                    return R.drawable.ic_task_other;
+            }
         }
     }
 

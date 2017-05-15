@@ -49,12 +49,18 @@ public class TasksContract {
         tasks.add(new TaskTO(TaskTO.TaskType.CLEAN, "Limpiar ventanas",
                 "Limpiar todas las ventanas de casa",
                 true, new Date(117, 5, 20).getTime(), "2m"));
-        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Regar plantas", null,
+        tasks.add(new TaskTO(TaskTO.TaskType.PET, "Regar plantas", null,
                 true, new Date(117, 4, 4).getTime(), "3d"));
-        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Vacunar perro", null,
+        tasks.add(new TaskTO(TaskTO.TaskType.PET, "Vacunar perro", null,
                 true, new Date(117, 4, 10).getTime(), "1y"));
-        tasks.add(new TaskTO(TaskTO.TaskType.OTHER, "Cortarme el pelo", null,
+        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Cortarme el pelo", null,
                 true, new Date(117, 3, 5).getTime(), "3m"));
+        tasks.add(new TaskTO(TaskTO.TaskType.CARE, "Cortarme las uñas", null,
+                true, new Date(117, 4, 16).getTime(), "1w"));
+        tasks.add(new TaskTO(TaskTO.TaskType.PET, "Limpiar gerbos", null,
+                true, new Date(117, 4, 20).getTime(), "1m"));
+        tasks.add(new TaskTO(TaskTO.TaskType.OTHER, "Buscar trabajo", null,
+                false, new Date(116, 4, 20).getTime(), null));
 
         for (TaskTO task : tasks) {
             db.insert(TasksEntry.TABLE_NAME, null, task.toContentValues());
