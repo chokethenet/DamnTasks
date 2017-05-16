@@ -1,8 +1,8 @@
-package net.chokethe.damntasks;
+package net.chokethe.damntasks.tasks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.chokethe.damntasks.R;
 import net.chokethe.damntasks.db.DamnTasksDbHelper;
-import net.chokethe.damntasks.db.TaskTO;
 
 import java.util.Date;
 
@@ -39,32 +39,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             return;
         }
         TaskTO task = new TaskTO(mCursor);
-        long id = task.getId();
 
         holder.itemView.setTag(position);
-        holder.id = id;
+        holder.id = task.getId();
 //        Resources res = mContext.getResources();
-        // FIXME: mock views
-        holder.mType.setImageResource(task.getType().getTaskResource());
-
+        TaskBO.setTypeView(holder.mType, task);
         holder.mTitle.setText(task.getTitle());
         holder.mNext.setText(new Date(task.getNextDate()).toString());
-
-        // FIXME: set alert in TaskTO
-        int color = task.getColor();
-        switch (color) {
-            case Color.GREEN:
-                holder.mAlert.setVisibility(View.INVISIBLE);
-                break;
-            case Color.YELLOW:
-                holder.mAlert.setVisibility(View.VISIBLE);
-                holder.mAlert.setImageResource(R.drawable.ic_warning);
-                break;
-            case Color.RED:
-                holder.mAlert.setVisibility(View.VISIBLE);
-                holder.mAlert.setImageResource(R.drawable.ic_error);
-                break;
-        }
     }
 
     @Override
@@ -91,22 +72,22 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         ImageView mType;
         TextView mTitle;
         TextView mNext;
-        ImageView mAlert;
         TasksAdapter mAdapter;
 
         TaskViewHolder(TasksAdapter adapter, View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mType = (ImageView) itemView.findViewById(R.id.task_tv_type);
-            mTitle = (TextView) itemView.findViewById(R.id.task_tv_title);
-            mNext = (TextView) itemView.findViewById(R.id.task_tv_next);
-            mAlert = (ImageView) itemView.findViewById(R.id.task_tv_alert);
+            mType = (ImageView) itemView.findViewById(R.id.taskItem_tv_type);
+            mTitle = (TextView) itemView.findViewById(R.id.taskItem_tv_title);
+            mNext = (TextView) itemView.findViewById(R.id.taskItem_tv_next);
             mAdapter = adapter;
         }
 
         @Override
         public void onClick(View v) {
-//            BlindDialogHelper.showUpdate(mContext, mAdapter, mDamnTasksDbHelper, this);
+            Intent configActivityIntent = new Intent(mContext, TaskActivity.class);
+            configActivityIntent.putExtra(Intent.EXTRA_INDEX, id);
+            mContext.startActivity(configActivityIntent);
         }
     }
 }

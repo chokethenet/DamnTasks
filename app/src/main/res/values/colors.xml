@@ -2,12 +2,12 @@
 <resources>
     <color name="colorPrimary">#FF9800</color>
     <color name="colorPrimaryDark">#F57C00</color>
-    <color name="colorAccent">#7C4DFF</color>
+    <color name="colorAccent">#8BC34A</color>
 
     <color name="black">#000000</color>
     <color name="grey">#555555</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="error">#99FF0000</color>
-    <color name="warning">#99FF9900</color>
+    <color name="error">#BBFF0000</color>
+    <color name="warning">#BBFF9800</color>
 </resources>

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/task_tv_type"
+        android:id="@+id/taskItem_tv_type"
         android:layout_width="@dimen/xx_large"
         android:layout_height="@dimen/xx_large"
         android:layout_marginLeft="@dimen/medium"
@@ -17,41 +17,28 @@
         tools:src="@drawable/ic_task_other" />
 
     <TextView
-        android:id="@+id/task_tv_title"
+        android:id="@+id/taskItem_tv_title"
         style="@style/DamnTasks.Text.title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/small"
         android:layout_marginStart="@dimen/small"
         android:layout_marginTop="@dimen/small"
-        app:layout_constraintLeft_toRightOf="@+id/task_tv_type"
-        app:layout_constraintStart_toEndOf="@+id/task_tv_type"
+        app:layout_constraintLeft_toRightOf="@+id/taskItem_tv_type"
+        app:layout_constraintStart_toEndOf="@+id/taskItem_tv_type"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Comprar pata fregadero" />
 
     <TextView
-        android:id="@+id/task_tv_next"
+        android:id="@+id/taskItem_tv_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small"
         android:layout_marginTop="@dimen/small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/task_tv_title"
-        app:layout_constraintStart_toStartOf="@+id/task_tv_title"
+        app:layout_constraintLeft_toLeftOf="@+id/taskItem_tv_title"
+        app:layout_constraintStart_toStartOf="@+id/taskItem_tv_title"
         tools:text="20 de Mayo" />
-
-    <ImageView
-        android:id="@+id/task_tv_alert"
-        android:layout_width="@dimen/xx_large"
-        android:layout_height="@dimen/xx_large"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_error"
-        android:layout_marginRight="@dimen/medium"
-        android:layout_marginEnd="@dimen/medium"
-        tools:visibility="visible" />
 
     <View
         android:layout_width="wrap_content"

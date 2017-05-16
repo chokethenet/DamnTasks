@@ -8,4 +8,7 @@
     <string name="about_logo_desc">Logo de la aplicación</string>
     <string name="about_mail_desc">Logo de correo electronico</string>
     <string name="about_mail_subject">Contacto desde MalditasTareas</string>
+    <string name="task_title">Tarea</string>
+    <string name="toast_task_archive">Tarea archivada</string>
+    <string name="toast_task_done">Tarea completada</string>
 </resources>

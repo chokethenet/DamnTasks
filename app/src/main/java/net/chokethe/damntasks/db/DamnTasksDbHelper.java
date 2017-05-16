@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import net.chokethe.damntasks.tasks.TaskBO;
+import net.chokethe.damntasks.tasks.TaskTO;
+
 public class DamnTasksDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "damntasks.db";
     private static final int DATABASE_VERSION = 1;
@@ -15,7 +18,13 @@ public class DamnTasksDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS tasks"); // FIXME: just for test
+        TasksContract.createTable(db);
+    }
+
+    // FIXME: just for test
+    public void reset() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS tasks");
         TasksContract.createTable(db);
         TasksContract.populateDefaults(db);
     }
@@ -29,6 +38,10 @@ public class DamnTasksDbHelper extends SQLiteOpenHelper {
         return TasksContract.selectAll(getReadableDatabase());
     }
 
+    public TaskTO getTaskById(long id) {
+        return TasksContract.selectById(getReadableDatabase(), id);
+    }
+
     public void updateTask(TaskTO task) {
         TasksContract.update(getWritableDatabase(), task.toContentValues());
     }
@@ -37,7 +50,15 @@ public class DamnTasksDbHelper extends SQLiteOpenHelper {
         TasksContract.insert(getWritableDatabase(), task.toContentValues());
     }
 
-    public void deleteTask(long id) {
-        TasksContract.delete(getWritableDatabase(), id);
+//    public void deleteTask(long id) {
+//        TasksContract.delete(getWritableDatabase(), id);
+//    }
+
+    public int archiveOrRepeatTask(long id) {
+        TaskTO task = getTaskById(id);
+        int msg = TaskBO.archiveOrRepeat(task);
+        TasksContract.update(getWritableDatabase(), task.toContentValues());
+        // TODO: send to ws
+        return msg;
     }
 }

@@ -1,16 +1,17 @@
-package net.chokethe.damntasks.db;
+package net.chokethe.damntasks.tasks;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.graphics.Color;
 
 import net.chokethe.damntasks.R;
+import net.chokethe.damntasks.db.TasksContract;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class TaskTO {
 
+    // FIXME: add more types
     public enum TaskType {
         OTHER(0), SHOP(1), CLEAN(2), WORK(3), CARE(4), PET(5);
 
@@ -50,29 +51,33 @@ public class TaskTO {
     }
 
     private Long id;
+    private boolean archived;
     private TaskType type;
     private String title;
     private String desc;
     private boolean repeat;
     private long nextDate;
-    private String period;
+    private Period period;
 
     public TaskTO(TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
+        this.archived = false;
         this.type = type;
         this.title = title;
         this.desc = desc;
         this.repeat = repeat;
         this.nextDate = nextDate;
-        this.period = period;
+        this.period = period != null ? new Period(period) : null;
     }
 
-    public TaskTO(long id, TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
+    public TaskTO(long id, boolean archived, TaskType type, String title, String desc, boolean repeat, long nextDate, String period) {
         this(type, title, desc, repeat, nextDate, period);
         this.id = id;
+        this.archived = archived;
     }
 
     public TaskTO(Cursor cursor) {
         this(cursor.getLong(cursor.getColumnIndex(TasksContract.TasksEntry._ID)),
+                cursor.getShort(cursor.getColumnIndex(TasksContract.TasksEntry.COL_ARCHIVED)) != 0,
                 TaskType.getById(cursor.getInt(cursor.getColumnIndex(TasksContract.TasksEntry.COL_TYPE))),
                 cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_TITLE)),
                 cursor.getString(cursor.getColumnIndex(TasksContract.TasksEntry.COL_DESC)),
@@ -91,19 +96,21 @@ public class TaskTO {
                         .append(desc).append("\n\r")
                         .append(repeat ? "repeat" : "").append("\n\r")
                         .append("nextDate: ").append(new Date(nextDate).toString()).append("\n\r")
-                        .append("period: ").append(period);
+                        .append("period: ").append(period.toString());
         return sb.toString();
     }
 
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
         if (id != null) contentValues.put(TasksContract.TasksEntry._ID, id);
+        contentValues.put(TasksContract.TasksEntry.COL_ARCHIVED, archived);
         contentValues.put(TasksContract.TasksEntry.COL_TYPE, type.getId());
         contentValues.put(TasksContract.TasksEntry.COL_TITLE, title);
         if (desc != null) contentValues.put(TasksContract.TasksEntry.COL_DESC, desc);
         contentValues.put(TasksContract.TasksEntry.COL_REPEAT, repeat);
         contentValues.put(TasksContract.TasksEntry.COL_NEXT_DATE, nextDate);
-        if (period != null) contentValues.put(TasksContract.TasksEntry.COL_PERIOD, period);
+        if (period != null)
+            contentValues.put(TasksContract.TasksEntry.COL_PERIOD, period.toString());
         return contentValues;
     }
 
@@ -111,47 +118,60 @@ public class TaskTO {
         return id;
     }
 
-    public TaskType getType() {
+    void archive() {
+        archived = true;
+    }
+
+    TaskType getType() {
         return type;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public boolean isRepeat() {
+    boolean isRepeat() {
         return repeat;
     }
 
-    public long getNextDate() {
+    long getNextDate() {
         return nextDate;
     }
 
-    public String getPeriod() {
+    public void setNextDate(long nextDate) {
+        this.nextDate = nextDate;
+    }
+
+    Period getPeriod() {
         return period;
     }
 
-    // TODO: improve calculation to be a percentage of the period so its better
-    // if no period, then calculate by the accuracy of the nextDate, if is up to seconds or just to days
-    // then set "hours" before if the time is specified or set "days" before if no time
-    public int getColor() {
-        Calendar today = Calendar.getInstance();
+    class Period {
+        int unit;
+        int value;
+        String period;
 
-        Calendar next = Calendar.getInstance();
-        next.setTimeInMillis(getNextDate());
-
-        if (next.before(today)) {
-            return Color.RED;
+        Period(String period) {
+            this.period = period;
+            if (period.contains("w")) {
+                this.unit = Calendar.DAY_OF_WEEK;
+                // TODO: add contains "w" to set days of week: all"w1234567", workdays "w23456", monday and fridays "w26"
+                // how to do this? how to look for the next dow?
+            } else {
+                if (period.contains("y")) {
+                    this.unit = Calendar.YEAR;
+                } else if (period.contains("m")) {
+                    this.unit = Calendar.MONTH;
+                } else if (period.contains("d")) {
+                    this.unit = Calendar.DATE;
+                }
+                this.value = period.charAt(0);
+            }
         }
-        next.add(Calendar.DATE, -7);
-        if (next.before(today)) {
-            return Color.YELLOW;
-        } else {
-            return Color.GREEN;
+
+        @Override
+        public String toString() {
+            return period;
         }
     }
 }

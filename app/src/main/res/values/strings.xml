@@ -12,4 +12,11 @@
     <string name="about_logo_desc">App logo</string>
     <string name="about_mail_desc">e-mail logo</string>
     <string name="about_github_desc">GitHub logo</string>
+
+    <!-- TASK -->
+    <string name="task_title">Task</string>
+
+    <!-- TOAST -->
+    <string name="toast_task_done">Task done</string>
+    <string name="toast_task_archive">Task archived</string>
 </resources>
