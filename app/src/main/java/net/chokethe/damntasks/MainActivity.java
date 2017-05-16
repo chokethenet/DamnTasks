@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // FIXME: add a dialog to accept or not the archive/done swipe in case of error
                 TasksAdapter.TaskViewHolder taskViewHolder = (TasksAdapter.TaskViewHolder) viewHolder;
                 int msg = mDamnTasksDbHelper.archiveOrRepeatTask(taskViewHolder.id);
                 mAdapter.swapCursor();

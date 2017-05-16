@@ -15,12 +15,11 @@ public class TaskBO {
 
     public static int archiveOrRepeat(TaskTO task) {
         if (task.isRepeat()) {
-            Calendar next = Calendar.getInstance();
-            next.setTimeInMillis(task.getNextDate());
+            Calendar now = Calendar.getInstance();
             TaskTO.Period period = task.getPeriod();
 
-            next.add(period.unit, period.value);
-            task.setNextDate(next.getTimeInMillis());
+            now.add(period.unit, period.value);
+            task.setNextDate(now.getTimeInMillis());
 
             return R.string.toast_task_done;
         } else {

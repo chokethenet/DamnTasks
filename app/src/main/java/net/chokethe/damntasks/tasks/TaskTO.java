@@ -165,7 +165,7 @@ public class TaskTO {
                 } else if (period.contains("d")) {
                     this.unit = Calendar.DATE;
                 }
-                this.value = period.charAt(0);
+                this.value = Integer.parseInt(period.substring(0, 1));
             }
         }
 
