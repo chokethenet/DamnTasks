@@ -23,8 +23,8 @@ public class TaskActivity extends AppCompatActivity {
             TaskTO task = mDamnTasksDbHelper.getTaskById(id);
 
             // TODO: set task in views
-            TextView test = (TextView) findViewById(R.id.task_tv_test);
-            test.setText(task.toString());
+//            TextView test = (TextView) findViewById(R.id.task_tv_test);
+//            test.setText(task.toString());
         }
 
         // TODO: add button to save and check for compulsory fields

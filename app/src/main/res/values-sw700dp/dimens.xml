@@ -7,6 +7,7 @@
     <dimen name="x_large">108dp</dimen>
     <dimen name="xx_large">128dp</dimen>
     <dimen name="xxx_large">224dp</dimen>
+    <dimen name="xxxx_large">448dp</dimen>
 
     <dimen name="button">256dp</dimen>
 

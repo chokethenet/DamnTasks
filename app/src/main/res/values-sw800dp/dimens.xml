@@ -5,6 +5,7 @@
     <dimen name="medium">40dp</dimen>
     <dimen name="xx_large">160dp</dimen>
     <dimen name="xxx_large">280dp</dimen>
+    <dimen name="xxxx_large">560dp</dimen>
 
     <dimen name="button">320dp</dimen>
 
