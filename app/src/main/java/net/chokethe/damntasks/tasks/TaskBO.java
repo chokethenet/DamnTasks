@@ -1,7 +1,5 @@
 package net.chokethe.damntasks.tasks;
 
-import android.graphics.Color;
-import android.view.View;
 import android.widget.ImageView;
 
 import net.chokethe.damntasks.R;
@@ -32,7 +30,7 @@ public class TaskBO {
     // TODO: improve calculation to be a percentage of the period so its better
     // if no period, then calculate by the accuracy of the nextDate, if is up to seconds or just to days
     // then set "hours" before if the time is specified or set "days" before if no time
-    public static void setTypeView(ImageView typeView, TaskTO task) {
+    public static void setTypeAlertView(ImageView typeView, TaskTO task) {
         Calendar now = Calendar.getInstance();
         Calendar next = Calendar.getInstance();
         next.setTimeInMillis(task.getNextDate());
@@ -41,9 +39,9 @@ public class TaskBO {
         threshold.add(Calendar.DATE, -7); // FIXME: maybe add a threshold in TaskTO
 
         if (next.before(now)) {
-            typeView.setImageResource(R.drawable.ic_error);
+            typeView.setImageResource(R.drawable.ic_alert_error);
         } else if (threshold.before(now)) {
-            typeView.setImageResource(R.drawable.ic_warning);
+            typeView.setImageResource(R.drawable.ic_alert_warning);
         } else {
             typeView.setImageResource(task.getType().getTaskResource());
         }

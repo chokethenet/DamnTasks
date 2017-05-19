@@ -11,4 +11,7 @@
     <string name="task_title">Tarea</string>
     <string name="toast_task_archive">Tarea archivada</string>
     <string name="toast_task_done">Tarea completada</string>
+    <string name="task_hint_title">Escoge un título</string>
+    <string name="task_hint_desc">Escoge una descripción (opcional)</string>
+    <string name="task_hint_datetime">Escoge una fecha y hora</string>
 </resources>

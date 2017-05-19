@@ -19,4 +19,7 @@
     <!-- TOAST -->
     <string name="toast_task_done">Task done</string>
     <string name="toast_task_archive">Task archived</string>
+    <string name="task_hint_title">Pick a title</string>
+    <string name="task_hint_desc">Pick a description (optional)</string>
+    <string name="task_hint_datetime">Pick a date and time</string>
 </resources>

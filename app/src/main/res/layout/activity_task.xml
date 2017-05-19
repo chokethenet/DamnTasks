@@ -16,32 +16,78 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_task_other" />
+        app:srcCompat="@drawable/ic_task_pick" />
 
     <EditText
         android:id="@+id/task_et_title"
         style="@style/DamnTasks.Text.title"
         android:layout_width="@dimen/xxxx_large"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/medium"
         android:layout_marginEnd="@dimen/medium"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/medium"
+        android:hint="@string/task_hint_title"
+        android:maxHeight="@dimen/xxx_large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/task_tv_type"
-        tools:text="Comprar pata fregadero" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/task_tv_type" />
 
     <EditText
         android:id="@+id/task_et_desc"
-        android:gravity="top"
         android:layout_width="@dimen/xxxx_large"
-        android:layout_height="@dimen/xxxx_large"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small"
+        android:gravity="bottom"
+        android:hint="@string/task_hint_desc"
+        android:maxHeight="@dimen/xxxx_large"
         app:layout_constraintLeft_toLeftOf="@+id/task_et_title"
         app:layout_constraintStart_toStartOf="@+id/task_et_title"
-        app:layout_constraintTop_toBottomOf="@+id/task_et_title"
-        tools:text="Comprar una pletina de metal con agujeros para poner en un liston y hacer una pata." />
+        app:layout_constraintTop_toBottomOf="@+id/task_et_title" />
 
-    <!--private boolean repeat;-->
+    <CheckBox
+        android:id="@+id/task_cb_repeat"
+        style="@style/DamnTasks.Text.title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        app:layout_constraintLeft_toLeftOf="@+id/task_tv_type"
+        app:layout_constraintStart_toStartOf="@+id/task_tv_type"
+        app:layout_constraintTop_toBottomOf="@+id/task_et_desc"
+        tools:text="Repeat/once" />
+
+    <TextView
+        android:id="@+id/task_tv_datetime"
+        style="@style/DamnTasks.Text.title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_marginStart="@dimen/medium"
+        android:hint="@string/task_hint_datetime"
+        app:layout_constraintBottom_toBottomOf="@+id/task_iv_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/task_iv_date"
+        tools:text="10/05/2017 15:00" />
+
+    <ImageView
+        android:id="@+id/task_iv_date"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/large"
+        android:layout_marginEnd="@dimen/small"
+        android:layout_marginRight="@dimen/small"
+        app:layout_constraintRight_toLeftOf="@+id/task_iv_time"
+        app:layout_constraintTop_toTopOf="@+id/task_iv_time"
+        app:srcCompat="@drawable/ic_task_date" />
+
+    <ImageView
+        android:id="@+id/task_iv_time"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/large"
+        android:layout_marginEnd="@dimen/medium"
+        android:layout_marginRight="@dimen/medium"
+        android:layout_marginTop="@dimen/small"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task_cb_repeat"
+        app:srcCompat="@drawable/ic_task_time" />
+
     <!--private long nextDate;-->
     <!--private Period period;-->
 </android.support.constraint.ConstraintLayout>

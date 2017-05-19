@@ -43,7 +43,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         holder.itemView.setTag(position);
         holder.id = task.getId();
 //        Resources res = mContext.getResources();
-        TaskBO.setTypeView(holder.mType, task);
+        TaskBO.setTypeAlertView(holder.mType, task);
         holder.mTitle.setText(task.getTitle());
         holder.mNext.setText(new Date(task.getNextDate()).toString());
     }

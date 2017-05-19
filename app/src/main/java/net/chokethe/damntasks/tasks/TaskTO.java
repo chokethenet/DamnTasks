@@ -35,17 +35,17 @@ public class TaskTO {
         public int getTaskResource() {
             switch (this) {
                 case SHOP:
-                    return R.drawable.ic_task_shop;
+                    return R.drawable.ic_type_shop;
                 case CLEAN:
-                    return R.drawable.ic_task_clean;
+                    return R.drawable.ic_type_clean;
                 case WORK:
-                    return R.drawable.ic_task_work;
+                    return R.drawable.ic_type_work;
                 case CARE:
-                    return R.drawable.ic_task_care;
+                    return R.drawable.ic_type_care;
                 case PET:
-                    return R.drawable.ic_task_pet;
+                    return R.drawable.ic_type_pet;
                 default:
-                    return R.drawable.ic_task_other;
+                    return R.drawable.ic_type_other;
             }
         }
     }
@@ -128,6 +128,10 @@ public class TaskTO {
 
     String getTitle() {
         return title;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
     boolean isRepeat() {

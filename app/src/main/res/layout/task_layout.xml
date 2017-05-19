@@ -14,7 +14,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_task_other" />
+        tools:src="@drawable/ic_type_other" />
 
     <TextView
         android:id="@+id/taskItem_tv_title"
